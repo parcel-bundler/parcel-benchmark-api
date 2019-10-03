@@ -4,5 +4,9 @@
   "env": {
     "FAUNADB_APIKEY": "@faunadb-parcel",
     "GITHUB_PASSWORD": "@github-password-parcel-bot"
-  }
+  },
+  "alias": [
+    "parcel-benchmark.blazingly.io",
+    "www.parcel-benchmark.blazingly.io"
+  ]
 }
