@@ -1,3 +1,3 @@
 # parcel-benchmark-api
 
-Github Action Repo: [DeMoorJasper/parcel-benchmark-action](https://github.com/DeMoorJasper/parcel-benchmark-action)
+Github Action Repo: [parcel-bundler/parcel-benchmark-action](https://github.com/parcel-bundler/parcel-benchmark-action)
