@@ -1,5 +1,4 @@
 import fetch from "node-fetch";
-import { captureException } from "@sentry/node";
 import urlJoin from "url-join";
 
 import { GITHUB_USERNAME, REPO_OWNER, REPO_NAME } from "../constants";
@@ -35,24 +34,17 @@ export default async function postComment(options: PostCommentOptions) {
     body: options.content
   };
 
-  try {
-    console.log(`POST COMMENT TO ${url}`);
+  console.log(`Post comment to ${url}`);
 
-    let res = await fetch(url, {
-      method: "POST",
-      headers,
-      body: JSON.stringify(body)
-    });
+  let res = await fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body)
+  });
 
-    if (!res.ok) {
-      throw new Error("POST COMMENT: " + res.statusText);
-    }
-
-    console.log(`Posted comment in ${url}`);
-  } catch (e) {
-    // DO NOT LEAK ANY SECRETS HERE!
-    captureException(e);
-
-    console.error("Failed to post to", url);
+  if (!res.ok) {
+    throw new Error("Failed to post comment: " + res.statusText);
   }
+
+  console.log(`Posted comment in ${url}`);
 }
