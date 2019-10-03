@@ -8,9 +8,6 @@
     "start": "next start"
   },
   "dependencies": {
-    "@now/node": "^1.0.1",
-    "ajv": "^6.10.2",
-    "faunadb": "^2.8.1",
     "next": "9.0.7",
     "react": "16.10.1",
     "react-dom": "16.10.1"
