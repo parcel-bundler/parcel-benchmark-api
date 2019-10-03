@@ -6,7 +6,7 @@
     "GITHUB_PASSWORD": "@github-password-parcel-bot"
   },
   "alias": [
-    "parcel-benchmark.blazingly.io",
-    "www.parcel-benchmark.blazingly.io"
+    "benchmark.parceljs.org",
+    "www.benchmark.parceljs.org"
   ]
 }
