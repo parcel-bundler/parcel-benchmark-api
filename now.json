@@ -1,0 +1,7 @@
+{
+  "name": "parcel-benchmark-api",
+  "version": 2,
+  "env": {
+    "FAUNADB_APIKEY": "@faunadb-parcel"
+  }
+}
