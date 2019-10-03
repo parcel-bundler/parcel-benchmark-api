@@ -1,4 +1,5 @@
 import { NowRequest, NowResponse } from "@now/node";
+import * as Sentry from "@sentry/node";
 import Ajv from "ajv";
 
 import checkAuth from "./utils/check-auth";
@@ -8,6 +9,9 @@ import { Comparisons } from "./utils/comparison-types";
 import postComment from "./github/post-comment";
 
 const ajvInstance = new Ajv();
+Sentry.init({
+  dsn: "https://c8f4848c599e44588dc2bc402e928b4d@sentry.io/1769567"
+});
 
 type Body = {
   comparisons: Comparisons;
@@ -46,10 +50,13 @@ export default async function handleRequest(req: NowRequest, res: NowResponse) {
       res.end("ok");
     } catch (e) {
       console.error(e);
+      Sentry.captureException(e);
       res.statusCode = 500;
       res.end("error");
     }
+  } else {
+    res.end("invalid request");
   }
 
-  res.end("invalid request");
+  await Sentry.flush();
 }
