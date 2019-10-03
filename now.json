@@ -2,6 +2,7 @@
   "name": "parcel-benchmark-api",
   "version": 2,
   "env": {
-    "FAUNADB_APIKEY": "@faunadb-parcel"
+    "FAUNADB_APIKEY": "@faunadb-parcel",
+    "GITHUB_PASSWORD": "@github-password-parcel-bot"
   }
 }

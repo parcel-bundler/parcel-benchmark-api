@@ -52,7 +52,8 @@ export default {
     },
     commitHash: { type: "string" },
     repo: { type: "string" },
-    branch: { type: "string" }
+    branch: { type: "string" },
+    issueNumber: { type: "string" }
   },
   required: ["comparisons", "commitHash", "repo", "branch"]
 };
