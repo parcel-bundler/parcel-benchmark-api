@@ -1,7 +1,6 @@
 import path from "path";
 
 import { Comparison, Comparisons, BundleComparison } from "./comparison-types";
-import postComment from "../github/post-comment";
 import timeFormatter from "./time-formatter";
 import sizeFormatter from "./size-formatter";
 
@@ -10,7 +9,9 @@ type LoggerOptions = {
   githubPassword?: string;
 };
 
-const TIMEDIFF_TRESHOLD = 100;
+// timediff treshold is a percentage value
+const TIMEDIFF_TRESHOLD = 0.05;
+// sizediff is byte value
 const SIZEDIFF_TRESHOLD = 1;
 
 function getAddition(diff: number) {
@@ -21,9 +22,11 @@ function getAddition(diff: number) {
   }
 }
 
-function formatTimeDiff(timeDiff: number) {
+function formatTimeDiff(timeDiff: number, time: number) {
   let addition =
-    Math.abs(timeDiff) > TIMEDIFF_TRESHOLD ? getAddition(timeDiff) : "";
+    Math.abs(timeDiff) > Math.abs(time * TIMEDIFF_TRESHOLD)
+      ? getAddition(timeDiff)
+      : "";
   let prefix = timeDiff > 0 ? "+" : "-";
   return prefix + timeFormatter(Math.abs(timeDiff)) + addition;
 }
@@ -40,7 +43,7 @@ function logBundles(bundles: Array<BundleComparison>, title: string): string {
   bundleTable += `| --- | --- | --- | --- | --- |\n`;
   for (let bundle of bundles) {
     if (
-      Math.abs(bundle.timeDiff) < TIMEDIFF_TRESHOLD &&
+      Math.abs(bundle.timeDiff) < Math.abs(bundle.time * TIMEDIFF_TRESHOLD) &&
       Math.abs(bundle.sizeDiff) < SIZEDIFF_TRESHOLD
     ) {
       continue;
@@ -50,7 +53,7 @@ function logBundles(bundles: Array<BundleComparison>, title: string): string {
       bundle.size
     )} | ${formatSizeDiff(bundle.sizeDiff)} | ${timeFormatter(
       bundle.time
-    )} | ${formatTimeDiff(bundle.timeDiff)} |\n`;
+    )} | ${formatTimeDiff(bundle.timeDiff, bundle.time)} |\n`;
 
     renderedBundles++;
   }
@@ -76,10 +79,16 @@ function logComparison(comparison: Comparison) {
   res += `| --- | --- | --- |\n`;
   res += `| Cold | ${timeFormatter(
     comparison.cold.buildTime
-  )} | ${formatTimeDiff(comparison.cold.buildTimeDiff)} |\n`;
+  )} | ${formatTimeDiff(
+    comparison.cold.buildTimeDiff,
+    comparison.cold.buildTime
+  )} |\n`;
   res += `| Cached | ${timeFormatter(
     comparison.cached.buildTime
-  )} | ${formatTimeDiff(comparison.cached.buildTimeDiff)} |\n`;
+  )} | ${formatTimeDiff(
+    comparison.cached.buildTimeDiff,
+    comparison.cached.buildTime
+  )} |\n`;
   res += "\n";
 
   // Bundle Sizes
