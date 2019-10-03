@@ -1,7 +1,7 @@
 import { NowRequest, NowResponse } from "@now/node";
 import Ajv from "ajv";
 
-import checkAuth from "../../api-utils/check-auth";
+import checkAuth from "./utils/check-auth";
 import bodySchema from "./body-schema";
 import logBenchmarks from "./utils/log-benchmarks";
 import { Comparisons } from "./utils/comparison-types";
