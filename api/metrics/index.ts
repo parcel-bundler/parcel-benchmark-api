@@ -18,7 +18,7 @@ type Body = {
 };
 
 export default async function handleRequest(req: NowRequest, res: NowResponse) {
-  if (req.method.toLowerCase() === "post") {
+  if (req.method && req.method.toLowerCase() === "post") {
     try {
       await checkAuth(req);
 
@@ -33,9 +33,9 @@ export default async function handleRequest(req: NowRequest, res: NowResponse) {
 
       let body: Body = { ...req.body };
       let markdownString = logBenchmarks(body.comparisons);
-      if (body.issueNumber) {
+      if (body.issueNumber && process.env.GITHUB_PASSWORD) {
         console.log("Post comment to GitHub");
-        
+
         await postComment({
           issueNumber: body.issueNumber,
           content: markdownString,

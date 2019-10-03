@@ -4,7 +4,9 @@ import { query } from "faunadb";
 import faunaClient from "./fauna-client";
 
 export default async function checkAuth(req: NowRequest) {
-  let authorizationHeader = req.headers.authorization.trim();
+  let authorizationHeader = req.headers.authorization
+    ? req.headers.authorization.trim()
+    : "";
   if (!authorizationHeader) {
     throw new Error("No auth header present");
   }
