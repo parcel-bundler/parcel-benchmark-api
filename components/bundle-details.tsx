@@ -16,13 +16,13 @@ export default function BundleDetails(props: Props) {
 
   return (
     <>
-      <div>{path.basename(bundle.filePath)}</div>
+      <div className="text-gray-700">{path.basename(bundle.filePath)}</div>
       <div className="text-right">{formatSize(bundle.size)}</div>
-      <div className="font-medium">
+      <div className="text-right font-medium">
         <SizeDiff size={bundle.size} sizeDiff={bundle.sizeDiff} />
       </div>
       <div className="text-right">{formatTime(bundle.time)}</div>
-      <div className="font-medium">
+      <div className="text-right font-medium">
         <TimeDiff time={bundle.time} timeDiff={bundle.timeDiff} />
       </div>
     </>

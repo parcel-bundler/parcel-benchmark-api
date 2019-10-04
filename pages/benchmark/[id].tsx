@@ -37,11 +37,7 @@ const Page: NextPage<Props> = (props: Props) => {
     <PageLayout>
       <SEO title={title} />
       <Title className="capitalize">{title}</Title>
-      <Link href="/" className="mb-6 inline-flex items-center">
-        <ChevronLeft className="fill-current h-3 w-3 inline-block mr-2" />
-        Return to benchmarks overview
-      </Link>
-      <div className="flex justify-between mb-4">
+      <div className="flex justify-between mb-12 mt-8">
         <div>
           <Label>Commit</Label>
           <Link
@@ -81,6 +77,10 @@ const Page: NextPage<Props> = (props: Props) => {
       {comparisons.comparisons.map((comparison, i) => {
         return <ComparisonDetails comparison={comparison} key={i} />;
       })}
+      <Link href="/" className="inline-flex items-center">
+        <ChevronLeft className="fill-current h-3 w-3 inline-block mr-2" />
+        Return to benchmarks overview
+      </Link>
     </PageLayout>
   );
 };

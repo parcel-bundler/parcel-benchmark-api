@@ -11,7 +11,10 @@ export default function Card(props: Props) {
 
   return (
     <article
-      className={classNames("w-full p-4 shadow-md rounded-lg", className)}
+      className={classNames(
+        "w-full p-4 shadow-md rounded-lg border-solid border-2 border-gray-200",
+        className
+      )}
     >
       {children}
     </article>

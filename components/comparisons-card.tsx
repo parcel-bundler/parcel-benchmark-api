@@ -7,6 +7,7 @@ import { REPO_NAME, REPO_OWNER } from "../constants";
 import TimeDiff from "./time-diff";
 import Link from "./link";
 import Card from "./card";
+import Label from "./label";
 
 type Props = {
   comparison: ComparisonsDocument;
@@ -16,14 +17,18 @@ export default function ComparisonsCard(props: Props) {
   let { comparison } = props;
 
   return (
-    <Card>
+    <Card className="my-4">
       <div className="flex justify-between mb-2 text-lg">
-        <Link href={`/benchmark/${comparison.id}`}>
-          <h2 className="font-semibold capitalize">
-            {comparison.repo} - {comparison.branch} (
-            {comparison.commit.substr(0, 8)})
-          </h2>
-        </Link>
+        <div>
+          <Link href={`/benchmark/${comparison.id}`}>
+            <h2 className="font-semibold capitalize">
+              {comparison.branch} - {comparison.commit.substr(0, 8)}
+            </h2>
+          </Link>
+          <span className="block text-sm capitalize text-blue-400">
+            {comparison.repo}
+          </span>
+        </div>
         {comparison.issue && (
           <Link
             href={urlJoin(
@@ -34,38 +39,44 @@ export default function ComparisonsCard(props: Props) {
               comparison.issue.toString()
             )}
           >
-            #{comparison.issue}
+            PR #{comparison.issue}
           </Link>
         )}
       </div>
-      <div>
-        <ul>
-          {comparison.comparisons.map((comparison, index) => {
-            return (
-              <li key={index} className="flex justify-between my-2">
-                <span>{comparison.name}</span>
-                <div className="font-semibold text-gray-800">
-                  <span>
-                    {timeFormatter(comparison.cold.buildTime)} (
-                    <TimeDiff
-                      time={comparison.cold.buildTime}
-                      timeDiff={comparison.cold.buildTimeDiff}
-                    />
-                    )
-                  </span>
-                  <span className="ml-4">
-                    {timeFormatter(comparison.cached.buildTime)} (
-                    <TimeDiff
-                      time={comparison.cached.buildTime}
-                      timeDiff={comparison.cached.buildTimeDiff}
-                    />
-                    )
-                  </span>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr auto auto",
+          gridColumnGap: "1rem",
+          gridRowGap: ".25rem"
+        }}
+      >
+        <span className="text-gray-600">Benchmark</span>
+        <span className="text-gray-600">Cold</span>
+        <span className="text-gray-600">Cached</span>
+        {comparison.comparisons.map((comparison, index) => {
+          return (
+            <>
+              <span className="capitalize">{comparison.name}</span>
+              <span className="font-semibold text-gray-800">
+                {timeFormatter(comparison.cold.buildTime)} (
+                <TimeDiff
+                  time={comparison.cold.buildTime}
+                  timeDiff={comparison.cold.buildTimeDiff}
+                />
+                )
+              </span>
+              <span className="font-semibold text-gray-800">
+                {timeFormatter(comparison.cached.buildTime)} (
+                <TimeDiff
+                  time={comparison.cached.buildTime}
+                  timeDiff={comparison.cached.buildTimeDiff}
+                />
+                )
+              </span>
+            </>
+          );
+        })}
       </div>
     </Card>
   );

@@ -20,7 +20,7 @@ export default function TimeDiff(props: Props) {
         "text-green-600": isProblematic && sizeDiff < 0
       })}
     >
-      {formatSizeDiff(sizeDiff)}
+      {formatSizeDiff(sizeDiff, false)}
     </span>
   );
 }

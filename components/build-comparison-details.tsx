@@ -30,7 +30,7 @@ export default function BuildComparisonDetails(props: Props) {
           display: "grid",
           gridTemplateColumns: "1fr repeat(4, auto)",
           gridRowGap: "0.5rem",
-          gridColumnGap: "1rem"
+          gridColumnGap: "1.5rem"
         }}
       >
         {comparison.bundles.map((b, i) => (
