@@ -1,5 +1,4 @@
 import React from "react";
-import path from "path";
 
 import { BundleComparison } from "../api/metrics/types/comparison";
 import formatSize from "../api/metrics/utils/size-formatter";
