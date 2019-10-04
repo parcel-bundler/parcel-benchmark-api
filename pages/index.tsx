@@ -34,7 +34,7 @@ const Page: NextPage<Props> = (props: Props) => {
   return (
     <PageLayout>
       <SEO title="Recent Benchmarks" />
-      <Title>Recent Benchmarks</Title>
+      <Title className="mb-8">Recent Benchmarks</Title>
       {comparisonsList}
     </PageLayout>
   );

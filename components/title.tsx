@@ -10,8 +10,8 @@ export default function Title(props: Props) {
   let { children, className } = props;
 
   return (
-    <div>
-      <h1 className={classNames('mb-2 text-2xl font-bold text-gray-600', className)}>{children}</h1>
+    <div className={className}>
+      <h1 className="mb-2 text-2xl font-bold text-gray-600">{children}</h1>
       <div className="h-2 w-32 bg-gray-200 mb-6"></div>
     </div>
   );
