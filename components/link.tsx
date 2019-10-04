@@ -14,7 +14,7 @@ export default function Link(props: Props) {
     <a
       href={href}
       className={classNames(
-        "text-blue-600 hover:text-blue-800 hover:underline font-semibold",
+        "text-blue-600 hover:text-blue-800 hover:underline font-semibold inline-block",
         className
       )}
     >

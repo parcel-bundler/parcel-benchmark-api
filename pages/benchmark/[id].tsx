@@ -14,6 +14,7 @@ import Link from "../../components/link";
 import { REPO_NAME, REPO_OWNER } from "../../constants";
 import { formatDateTime } from "../../utils/format-date";
 import ComparisonDetails from "../../components/comparison-details";
+import ChevronLeft from "../../icons/chevron-left.svg";
 
 type Props = {
   error?: Error;
@@ -35,6 +36,10 @@ const Page: NextPage<Props> = (props: Props) => {
   return (
     <PageLayout>
       <SEO title={title} />
+      <Link href="/" className="mb-6 inline-flex items-center">
+        <ChevronLeft className="fill-current h-3 w-3 inline-block mr-2" />
+        Return to benchmarks overview
+      </Link>
       <Title className="capitalize">{title}</Title>
       <div className="flex justify-between mb-4">
         <div>
@@ -74,7 +79,7 @@ const Page: NextPage<Props> = (props: Props) => {
         )}
       </div>
       {comparisons.comparisons.map((comparison, i) => {
-        return <ComparisonDetails comparison={comparison} key={i} />
+        return <ComparisonDetails comparison={comparison} key={i} />;
       })}
     </PageLayout>
   );
