@@ -17,20 +17,12 @@ export default function ComparisonsCard(props: Props) {
   return (
     <article className="w-full p-4 shadow-md rounded-lg">
       <div className="flex justify-between mb-2 text-lg">
-        <h2 className="font-semibold capitalize text-gray-800">
-          {comparison.repo} - {comparison.branch} (
-          <Link
-            href={urlJoin(
-              "https://github.com/",
-              comparison.repo,
-              "commit",
-              comparison.commit
-            )}
-          >
-            {comparison.commit.substr(0, 8)}
-          </Link>
-          )
-        </h2>
+        <Link href={`/benchmark/${comparison.id}`}>
+          <h2 className="font-semibold capitalize">
+            {comparison.repo} - {comparison.branch} (
+            {comparison.commit.substr(0, 8)})
+          </h2>
+        </Link>
         {comparison.issue && (
           <Link
             href={urlJoin(
