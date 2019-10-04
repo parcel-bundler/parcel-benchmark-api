@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import fetch from "cross-fetch";
 import urlJoin from "url-join";
 
 import { GITHUB_USERNAME, REPO_OWNER, REPO_NAME } from "../constants";
