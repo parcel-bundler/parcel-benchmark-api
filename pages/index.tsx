@@ -6,6 +6,8 @@ import urlJoin from "url-join";
 
 import SEO from "../components/seo";
 import { API_URL } from "../constants";
+import PageLayout from "../components/page-layout";
+import Title from "../components/title";
 
 type Props = {
   error?: Error;
@@ -28,10 +30,11 @@ const Page: NextPage<Props> = (props: Props) => {
   }
 
   return (
-    <>
-      <SEO title="Last commits" />
+    <PageLayout>
+      <SEO title="Recent Benchmarks" />
+      <Title>Recent Benchmarks</Title>
       {comparisonsList}
-    </>
+    </PageLayout>
   );
 };
 
