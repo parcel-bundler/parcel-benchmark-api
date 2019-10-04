@@ -1,4 +1,3 @@
-import path from "path";
 import urlJoin from "url-join";
 
 import { Comparison, Comparisons, BundleComparison } from "../types/comparison";
@@ -27,7 +26,7 @@ function logBundles(bundles: Array<BundleComparison>, title: string): string {
       continue;
     }
 
-    bundleTable += `| ${path.basename(bundle.filePath)} | ${sizeFormatter(
+    bundleTable += `| ${bundle.filePath} | ${sizeFormatter(
       bundle.size
     )} | ${formatSizeDiff(bundle.sizeDiff)} | ${timeFormatter(
       bundle.time

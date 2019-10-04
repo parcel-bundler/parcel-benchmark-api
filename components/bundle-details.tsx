@@ -16,7 +16,7 @@ export default function BundleDetails(props: Props) {
 
   return (
     <>
-      <div className="text-gray-700">{path.basename(bundle.filePath)}</div>
+      <div className="text-gray-700">{bundle.filePath}</div>
       <div className="text-right">{formatSize(bundle.size)}</div>
       <div className="text-right font-medium">
         <SizeDiff size={bundle.size} sizeDiff={bundle.sizeDiff} />
