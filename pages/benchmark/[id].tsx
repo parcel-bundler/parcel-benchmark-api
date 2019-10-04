@@ -59,7 +59,7 @@ const Page: NextPage<Props> = (props: Props) => {
         </div>
         {comparisons.issue && (
           <div className="text-right">
-            <Label>Issue</Label>
+            <Label>Pull Request</Label>
             <Link
               href={urlJoin(
                 "https://github.com/",
