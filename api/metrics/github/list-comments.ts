@@ -9,7 +9,7 @@ type PostCommentOptions = {
 
 export default async function listComments(options: PostCommentOptions): Promise<any> {
   let url = urlJoin('https://api.github.com/repos', REPO_OWNER, REPO_NAME, 'issues', options.issueNumber, 'comments');
-  let res = await (await fetch(url)).json();
+  let res = await fetch(url);
 
   if (!res.ok) {
     throw new Error('Failed to get comments: ' + res.statusText);
@@ -17,5 +17,5 @@ export default async function listComments(options: PostCommentOptions): Promise
 
   console.log(`Got comments ${url}`);
 
-  return res;
+  return res.json();
 }

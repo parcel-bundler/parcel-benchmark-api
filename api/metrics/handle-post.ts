@@ -23,6 +23,7 @@ async function handlePostComment(options: Options) {
   console.log('Post comment to GitHub');
 
   try {
+    console.log('list comments');
     let comments = await listComments({
       issueNumber: options.issue
     });
@@ -37,8 +38,9 @@ async function handlePostComment(options: Options) {
     }
 
     if (existingComment) {
-      await updateComment({
-        commentId: `${existingComment.id}`,
+      console.log('update existing');
+      return await updateComment({
+        url: existingComment.url,
         content: options.markdownString
       });
     }
@@ -47,6 +49,7 @@ async function handlePostComment(options: Options) {
     captureException(e);
   }
 
+  // Fallback to posting new comment
   await postComment({
     issueNumber: options.issue,
     content: options.markdownString
@@ -76,7 +79,7 @@ export default async function handlePost(req: NowRequest, res: NowResponse) {
   let body: ComparisonsBody = { ...req.body };
 
   // Store data into faunadb
-  let comparisonId = await storeComparisons(body);
+  let comparisonId = '1'; //await storeComparisons(body);
 
   let markdownString = logBenchmarks(body.comparisons, {
     id: comparisonId
@@ -85,7 +88,7 @@ export default async function handlePost(req: NowRequest, res: NowResponse) {
   console.log(markdownString);
 
   if (body.issue && process.env.GITHUB_PASSWORD) {
-    handlePostComment({
+    await handlePostComment({
       issue: body.issue,
       markdownString
     });

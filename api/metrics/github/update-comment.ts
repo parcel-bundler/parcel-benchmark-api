@@ -1,12 +1,10 @@
 import fetch from 'cross-fetch';
-import urlJoin from 'url-join';
 
-import { REPO_OWNER, REPO_NAME } from '../../../constants';
 import { GITHUB_AUTH } from '../constants';
 import * as base64 from '../utils/base64';
 
 type PostCommentOptions = {
-  commentId: string;
+  url: string;
   content: string;
 };
 
@@ -15,15 +13,13 @@ export default async function updateComment(options: PostCommentOptions) {
     Authorization: 'Basic ' + base64.encode(GITHUB_AUTH)
   };
 
-  let url = urlJoin('https://api.github.com/repos', REPO_OWNER, REPO_NAME, 'comments', options.commentId);
-
   let body = {
     body: options.content
   };
 
-  console.log(`Update comment to ${url}`);
+  console.log(`Update comment to ${options.url}`);
 
-  let res = await fetch(url, {
+  let res = await fetch(options.url, {
     method: 'PATCH',
     headers,
     body: JSON.stringify(body)
@@ -33,5 +29,5 @@ export default async function updateComment(options: PostCommentOptions) {
     throw new Error('Failed to update comment: ' + res.statusText);
   }
 
-  console.log(`Updated comment on ${url}`);
+  console.log(`Updated comment on ${options.url}`);
 }
