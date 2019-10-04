@@ -1,7 +1,7 @@
-import React from "react";
-import Head from "next/head";
+import React from 'react';
+import Head from 'next/head';
 
-import { SITE_NAME, SITE_DESCRIPTION } from "../constants";
+import { SITE_NAME, SITE_DESCRIPTION } from '../constants';
 
 export type Props = {
   title: string;

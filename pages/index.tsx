@@ -1,15 +1,15 @@
-import React from "react";
-import { NextPage } from "next";
-import { withRouter } from "next/router";
-import fetch from "cross-fetch";
-import urlJoin from "url-join";
+import React from 'react';
+import { NextPage } from 'next';
+import { withRouter } from 'next/router';
+import fetch from 'cross-fetch';
+import urlJoin from 'url-join';
 
-import SEO from "../components/seo";
-import { API_URL } from "../constants";
-import PageLayout from "../components/page-layout";
-import Title from "../components/title";
-import { ComparisonsDocument } from "../api/metrics/types/comparison";
-import ComparisonsCard from "../components/comparisons-card";
+import SEO from '../components/seo';
+import { API_URL } from '../constants';
+import PageLayout from '../components/page-layout';
+import Title from '../components/title';
+import { ComparisonsDocument } from '../api/metrics/types/comparison';
+import ComparisonsCard from '../components/comparisons-card';
 
 type Props = {
   error?: Error;
@@ -40,9 +40,9 @@ const Page: NextPage<Props> = (props: Props) => {
   );
 };
 
-Page.getInitialProps = async ({ query }: any) => {
+Page.getInitialProps = async () => {
   try {
-    let res: any = await fetch(urlJoin(API_URL, "metrics"));
+    let res: any = await fetch(urlJoin(API_URL, 'metrics'));
     res = await res.json();
 
     return {

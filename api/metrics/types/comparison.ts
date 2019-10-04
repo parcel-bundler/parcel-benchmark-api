@@ -40,5 +40,5 @@ export type ComparisonsBody = {
 
 export type ComparisonsDocument = ComparisonsBody & {
   id: string;
-  createdAt: number
-}
+  createdAt: number;
+};

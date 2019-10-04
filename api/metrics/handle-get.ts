@@ -1,13 +1,13 @@
-import { NowRequest, NowResponse } from "@now/node";
-import { query } from "faunadb";
+import { NowRequest, NowResponse } from '@now/node';
+import { query } from 'faunadb';
 
-import faunaClient from "./utils/fauna-client";
+import faunaClient from './utils/fauna-client';
 
 const PAGE_COUNT = 20;
 
 function stringifyQuery(queryparam: string | Array<string>): string {
   if (Array.isArray(queryparam)) {
-    queryparam = queryparam.join("");
+    queryparam = queryparam.join('');
   }
 
   return queryparam.trim();
@@ -18,14 +18,12 @@ export default async function handleGet(req: NowRequest, res: NowResponse) {
   if (id) {
     // Return comparisons for id
     try {
-      let faunaRes: any = await faunaClient.query(
-        query.Get(query.Ref(query.Collection("comparisons"), id))
-      );
+      let faunaRes: any = await faunaClient.query(query.Get(query.Ref(query.Collection('comparisons'), id)));
 
       res.statusCode = 200;
       res.end(
         JSON.stringify({
-          type: "error",
+          type: 'error',
           data: {
             id,
             ...faunaRes.data
@@ -36,9 +34,9 @@ export default async function handleGet(req: NowRequest, res: NowResponse) {
       res.statusCode = 404;
       res.end(
         JSON.stringify({
-          type: "error",
+          type: 'error',
           data: {
-            code: "not_found"
+            code: 'not_found'
           }
         })
       );
@@ -47,13 +45,10 @@ export default async function handleGet(req: NowRequest, res: NowResponse) {
     // Return last x comparisons
     let faunaRes: any = await faunaClient.query(
       query.Map(
-        query.Paginate(
-          query.Match(query.Index("comparisons_reverse_sorted_createdAt")),
-          {
-            size: PAGE_COUNT
-          }
-        ),
-        query.Lambda(["createdAt", "ref"], query.Get(query.Var("ref")))
+        query.Paginate(query.Match(query.Index('comparisons_reverse_sorted_createdAt')), {
+          size: PAGE_COUNT
+        }),
+        query.Lambda(['createdAt', 'ref'], query.Get(query.Var('ref')))
       )
     );
 
@@ -61,7 +56,7 @@ export default async function handleGet(req: NowRequest, res: NowResponse) {
 
     res.end(
       JSON.stringify({
-        type: "success",
+        type: 'success',
         data: faunaRes.data.map((doc: any) => {
           return {
             id: doc.ref.id,

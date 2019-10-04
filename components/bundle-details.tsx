@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import { BundleComparison } from "../api/metrics/types/comparison";
-import formatSize from "../api/metrics/utils/size-formatter";
-import formatTime from "../api/metrics/utils/time-formatter";
-import TimeDiff from "./time-diff";
-import SizeDiff from "./size-diff";
+import { BundleComparison } from '../api/metrics/types/comparison';
+import formatSize from '../api/metrics/utils/size-formatter';
+import formatTime from '../api/metrics/utils/time-formatter';
+import TimeDiff from './time-diff';
+import SizeDiff from './size-diff';
 
 type Props = {
   bundle: BundleComparison;

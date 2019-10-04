@@ -1,12 +1,12 @@
 export default function sizeFormatter(size: number) {
-  let unit = "b";
+  let unit = 'b';
   if (size > 1024) {
     size /= 1024;
-    unit = "kb";
+    unit = 'kb';
 
     if (size > 1024) {
       size /= 1024;
-      unit = "mb";
+      unit = 'mb';
     }
   }
 

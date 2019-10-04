@@ -1,59 +1,59 @@
 const comparison = {
-  type: "object",
+  type: 'object',
   properties: {
-    buildTime: { type: "number" },
-    buildTimeDiff: { type: "number" },
+    buildTime: { type: 'number' },
+    buildTimeDiff: { type: 'number' },
     bundles: {
-      type: "array",
+      type: 'array',
       items: {
-        type: "object",
+        type: 'object',
         properties: {
-          filePath: { type: "string" },
-          size: { type: "number" },
-          sizeDiff: { type: "number" },
-          time: { type: "number" },
-          timeDiff: { type: "number" },
+          filePath: { type: 'string' },
+          size: { type: 'number' },
+          sizeDiff: { type: 'number' },
+          time: { type: 'number' },
+          timeDiff: { type: 'number' },
           largestAssets: {
-            type: "array",
+            type: 'array',
             items: {
-              type: "object",
+              type: 'object',
               properties: {
-                filePath: { type: "string" },
-                size: { type: "number" },
-                sizeDiff: { type: "number" },
-                time: { type: "number" },
-                timeDiff: { type: "number" }
+                filePath: { type: 'string' },
+                size: { type: 'number' },
+                sizeDiff: { type: 'number' },
+                time: { type: 'number' },
+                timeDiff: { type: 'number' }
               }
             }
           },
-          totalAssets: { type: "number" }
+          totalAssets: { type: 'number' }
         },
-        required: ["filePath", "size", "sizeDiff", "time", "timeDiff"]
+        required: ['filePath', 'size', 'sizeDiff', 'time', 'timeDiff']
       }
     }
   },
-  required: ["buildTime", "buildTimeDiff", "bundles"]
+  required: ['buildTime', 'buildTimeDiff', 'bundles']
 };
 
 export default {
-  type: "object",
+  type: 'object',
   properties: {
     comparisons: {
-      type: "array",
+      type: 'array',
       items: {
-        type: "object",
+        type: 'object',
         properties: {
-          name: { type: "string" },
+          name: { type: 'string' },
           cold: { ...comparison },
           cached: { ...comparison }
         },
-        required: ["name", "cold", "cached"]
+        required: ['name', 'cold', 'cached']
       }
     },
-    commit: { type: "string" },
-    repo: { type: "string" },
-    branch: { type: "string" },
-    issue: { type: "string" }
+    commit: { type: 'string' },
+    repo: { type: 'string' },
+    branch: { type: 'string' },
+    issue: { type: 'string' }
   },
-  required: ["comparisons", "commit", "repo", "branch"]
+  required: ['comparisons', 'commit', 'repo', 'branch']
 };

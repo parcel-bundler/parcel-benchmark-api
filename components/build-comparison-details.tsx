@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import { BuildComparison } from "../api/metrics/types/comparison";
-import Card from "./card";
-import BundleDetails from "./bundle-details";
-import TimeDiff from "./time-diff";
-import timeFormatter from "../api/metrics/utils/time-formatter";
+import { BuildComparison } from '../api/metrics/types/comparison';
+import Card from './card';
+import BundleDetails from './bundle-details';
+import TimeDiff from './time-diff';
+import timeFormatter from '../api/metrics/utils/time-formatter';
 
 type Props = {
   name: string;
@@ -18,19 +18,15 @@ export default function BuildComparisonDetails(props: Props) {
     <Card className="my-4">
       <h3 className="font-semibold font-xl mb-4 text-gray-800">
         {name} - {timeFormatter(comparison.buildTime)} (
-        <TimeDiff
-          time={comparison.buildTime}
-          timeDiff={comparison.buildTimeDiff}
-        />
-        )
+        <TimeDiff time={comparison.buildTime} timeDiff={comparison.buildTimeDiff} />)
       </h3>
 
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "1fr repeat(4, auto)",
-          gridRowGap: "0.5rem",
-          gridColumnGap: "1.5rem"
+          display: 'grid',
+          gridTemplateColumns: '1fr repeat(4, auto)',
+          gridRowGap: '0.5rem',
+          gridColumnGap: '1.5rem'
         }}
       >
         {comparison.bundles.map((b, i) => (

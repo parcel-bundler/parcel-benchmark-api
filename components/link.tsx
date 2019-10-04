@@ -1,5 +1,5 @@
-import React from "react";
-import classNames from "classnames";
+import React from 'react';
+import classNames from 'classnames';
 
 type Props = {
   href: string;
@@ -13,10 +13,7 @@ export default function Link(props: Props) {
   return (
     <a
       href={href}
-      className={classNames(
-        "text-blue-600 hover:text-blue-800 hover:underline font-semibold inline-block",
-        className
-      )}
+      className={classNames('text-blue-600 hover:text-blue-800 hover:underline font-semibold inline-block', className)}
     >
       {children}
     </a>

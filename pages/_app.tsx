@@ -1,16 +1,16 @@
-import React from "react";
-import App from "next/app";
+import React from 'react';
+import App from 'next/app';
 
-import sentry from "../utils/sentry";
+import sentry from '../utils/sentry';
 
 const { Sentry, captureException } = sentry();
 
-if (typeof window !== "undefined") {
-  const WebFont = require("webfontloader");
+if (typeof window !== 'undefined') {
+  const WebFont = require('webfontloader');
 
   WebFont.load({
     google: {
-      families: ["Montserrat"]
+      families: ['Montserrat']
     }
   });
 }
@@ -87,9 +87,7 @@ export default class MyApp extends App {
       return (
         <section className="w-full flex min-h-screen items-center justify-center">
           <div className="bg-gray-100 rounded p-4 shadow text-gray-700">
-            <h1 className="border-b font-semibold text-lg mb-4 px-4 py-2">
-              There was an error!
-            </h1>
+            <h1 className="border-b font-semibold text-lg mb-4 px-4 py-2">There was an error!</h1>
             <p className="text-center my-2">
               <a
                 href="#"

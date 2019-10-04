@@ -1,7 +1,7 @@
-import { query } from "faunadb";
+import { query } from 'faunadb';
 
-import faunaClient from "./fauna-client";
-import { Comparisons } from "../types/comparison";
+import faunaClient from './fauna-client';
+import { Comparisons } from '../types/comparison';
 
 type Payload = {
   commit: string;
@@ -13,7 +13,7 @@ type Payload = {
 
 export default async function storeComparison(data: Payload): Promise<string> {
   let res: any = await faunaClient.query(
-    query.Create(query.Collection("comparisons"), {
+    query.Create(query.Collection('comparisons'), {
       data: {
         ...data,
         createdAt: Date.now()
@@ -21,7 +21,7 @@ export default async function storeComparison(data: Payload): Promise<string> {
     })
   );
 
-  console.log(res)
+  console.log(res);
 
   return res.ref.id;
 }

@@ -1,12 +1,12 @@
 export default function timeFormatter(size: number) {
-  let unit = "ms";
+  let unit = 'ms';
   if (size > 1000) {
     size /= 1000;
-    unit = "s";
+    unit = 's';
 
     if (size > 60) {
       size /= 60;
-      unit = "m";
+      unit = 'm';
     }
   }
 

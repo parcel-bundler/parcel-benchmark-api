@@ -5,8 +5,5 @@
     "FAUNADB_APIKEY": "@faunadb-parcel",
     "GITHUB_PASSWORD": "@github-password-parcel-bot"
   },
-  "alias": [
-    "benchmark.parceljs.org",
-    "www.benchmark.parceljs.org"
-  ]
+  "alias": ["benchmark.parceljs.org", "www.benchmark.parceljs.org"]
 }

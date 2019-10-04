@@ -1,12 +1,12 @@
-import { NowRequest, NowResponse } from "@now/node";
-import Ajv from "ajv";
+import { NowRequest, NowResponse } from '@now/node';
+import Ajv from 'ajv';
 
-import postComment from "./github/post-comment";
-import storeComparisons from "./utils/store-comparisons";
-import checkAuth from "./utils/check-auth";
-import bodySchema from "./body-schema";
-import logBenchmarks from "./utils/log-benchmarks";
-import { ComparisonsBody } from "./types/comparison";
+import postComment from './github/post-comment';
+import storeComparisons from './utils/store-comparisons';
+import checkAuth from './utils/check-auth';
+import bodySchema from './body-schema';
+import logBenchmarks from './utils/log-benchmarks';
+import { ComparisonsBody } from './types/comparison';
 
 const ajvInstance = new Ajv();
 
@@ -15,15 +15,15 @@ export default async function handlePost(req: NowRequest, res: NowResponse) {
 
   let isValid = await ajvInstance.validate(bodySchema, req.body);
   if (!isValid) {
-    console.log("invalid request");
+    console.log('invalid request');
     console.log(ajvInstance.errors);
 
     res.statusCode = 400;
     return res.end(
       JSON.stringify({
-        type: "error",
+        type: 'error',
         data: {
-          code: "invalid_request",
+          code: 'invalid_request',
           errors: ajvInstance.errors
         }
       })
@@ -42,7 +42,7 @@ export default async function handlePost(req: NowRequest, res: NowResponse) {
   console.log(markdownString);
 
   if (body.issue && process.env.GITHUB_PASSWORD) {
-    console.log("Post comment to GitHub");
+    console.log('Post comment to GitHub');
 
     await postComment({
       issueNumber: body.issue,
@@ -53,7 +53,7 @@ export default async function handlePost(req: NowRequest, res: NowResponse) {
 
   return res.end(
     JSON.stringify({
-      type: "success",
+      type: 'success',
       data: {}
     })
   );

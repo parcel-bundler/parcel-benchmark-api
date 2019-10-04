@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import SubTitle from "./sub-title";
-import { Comparison } from "../api/metrics/types/comparison";
-import BuildComparisonDetails from "./build-comparison-details";
+import SubTitle from './sub-title';
+import { Comparison } from '../api/metrics/types/comparison';
+import BuildComparisonDetails from './build-comparison-details';
 
 type Props = {
   comparison: Comparison;

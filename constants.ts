@@ -1,9 +1,9 @@
-export const API_ROOT = "https://benchmark.parceljs.org/";
-export const API_URL = API_ROOT + "api/";
-export const SITE_NAME = "Parcel Benchmark";
-export const SITE_DESCRIPTION = "";
-export const REPO_NAME = "parcel";
-export const REPO_OWNER = "parcel-bundler";
-export const REPO_BRANCH = "v2";
+export const API_ROOT = 'https://benchmark.parceljs.org/';
+export const API_URL = API_ROOT + 'api/';
+export const SITE_NAME = 'Parcel Benchmark';
+export const SITE_DESCRIPTION = '';
+export const REPO_NAME = 'parcel';
+export const REPO_OWNER = 'parcel-bundler';
+export const REPO_BRANCH = 'v2';
 export const TIMEDIFF_TRESHOLD = 0.05;
-export const GITHUB_USERNAME = "parcel-benchmark";
+export const GITHUB_USERNAME = 'parcel-benchmark';

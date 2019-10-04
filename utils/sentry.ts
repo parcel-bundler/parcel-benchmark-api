@@ -1,11 +1,11 @@
 // NOTE: This require will be replaced with `@sentry/browser`
 // client side thanks to the webpack config in next.config.js
 // @ts-ignore
-const Sentry = require("@sentry/node");
-const SentryIntegrations = require("@sentry/integrations");
-import cookie from "cookie";
+const Sentry = require('@sentry/node');
+const SentryIntegrations = require('@sentry/integrations');
+import cookie from 'cookie';
 
-const SENTRY_DSN = "https://bfe4a12bb8e847cbb5307da9493306f6@sentry.io/1770100";
+const SENTRY_DSN = 'https://bfe4a12bb8e847cbb5307da9493306f6@sentry.io/1770100';
 
 export default (release = process.env.SENTRY_RELEASE) => {
   const sentryOptions = {
@@ -16,9 +16,9 @@ export default (release = process.env.SENTRY_RELEASE) => {
   };
 
   // When we're developing locally
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV !== 'production') {
     /* eslint-disable-next-line global-require */
-    const sentryTestkit = require("sentry-testkit");
+    const sentryTestkit = require('sentry-testkit');
     const { sentryTransport } = sentryTestkit();
 
     // Don't actually send the errors to Sentry
@@ -50,20 +50,20 @@ export default (release = process.env.SENTRY_RELEASE) => {
         }
 
         if (err.statusCode) {
-          scope.setExtra("statusCode", err.statusCode);
+          scope.setExtra('statusCode', err.statusCode);
         }
 
         if (ctx) {
           const { req, res, errorInfo, query, pathname } = ctx;
 
           if (res && res.statusCode) {
-            scope.setExtra("statusCode", res.statusCode);
+            scope.setExtra('statusCode', res.statusCode);
           }
 
-          if (typeof window !== "undefined") {
-            scope.setTag("ssr", false);
-            scope.setExtra("query", query);
-            scope.setExtra("pathname", pathname);
+          if (typeof window !== 'undefined') {
+            scope.setTag('ssr', false);
+            scope.setExtra('query', query);
+            scope.setExtra('pathname', pathname);
 
             // On client-side we use js-cookie package to fetch it
             let cookieContent = cookie.parse(document.cookie);
@@ -72,12 +72,12 @@ export default (release = process.env.SENTRY_RELEASE) => {
               scope.setUser({ id: sessionId });
             }
           } else {
-            scope.setTag("ssr", true);
-            scope.setExtra("url", req.url);
-            scope.setExtra("method", req.method);
-            scope.setExtra("headers", req.headers);
-            scope.setExtra("params", req.params);
-            scope.setExtra("query", req.query);
+            scope.setTag('ssr', true);
+            scope.setExtra('url', req.url);
+            scope.setExtra('method', req.method);
+            scope.setExtra('headers', req.headers);
+            scope.setExtra('params', req.params);
+            scope.setExtra('query', req.query);
 
             // On server-side we take session cookie directly from request
             if (req.cookies && req.cookies.sid) {
@@ -86,9 +86,7 @@ export default (release = process.env.SENTRY_RELEASE) => {
           }
 
           if (errorInfo) {
-            Object.keys(errorInfo).forEach(key =>
-              scope.setExtra(key, errorInfo[key])
-            );
+            Object.keys(errorInfo).forEach(key => scope.setExtra(key, errorInfo[key]));
           }
         }
       });
