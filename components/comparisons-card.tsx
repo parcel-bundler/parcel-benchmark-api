@@ -3,7 +3,7 @@ import urlJoin from "url-join";
 
 import { ComparisonsDocument } from "../api/metrics/types/comparison";
 import timeFormatter from "../api/metrics/utils/time-formatter";
-import { REPO_NAME, REPO_ORG } from "../constants";
+import { REPO_NAME, REPO_OWNER } from "../constants";
 import TimeDiff from "./time-diff";
 import Link from "./link";
 
@@ -35,7 +35,7 @@ export default function ComparisonsCard(props: Props) {
           <Link
             href={urlJoin(
               "https://github.com/",
-              REPO_ORG,
+              REPO_OWNER,
               REPO_NAME,
               "issues",
               comparison.issue.toString()
@@ -51,7 +51,7 @@ export default function ComparisonsCard(props: Props) {
             return (
               <li key={index} className="flex justify-between my-2">
                 <span>{comparison.name}</span>
-                <div className="font-semibold">
+                <div className="font-semibold text-gray-800">
                   <span>
                     {timeFormatter(comparison.cold.buildTime)} (
                     <TimeDiff

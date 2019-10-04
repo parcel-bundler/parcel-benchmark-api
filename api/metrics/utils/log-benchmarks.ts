@@ -3,39 +3,12 @@ import path from "path";
 import { Comparison, Comparisons, BundleComparison } from "../types/comparison";
 import timeFormatter from "./time-formatter";
 import sizeFormatter from "./size-formatter";
+import { TIMEDIFF_TRESHOLD } from "../../../constants";
+import formatTimeDiff from "./format-time-diff";
+import formatSizeDiff from "./format-size-diff";
 
-type LoggerOptions = {
-  githubIssue: string;
-  githubPassword?: string;
-};
-
-// timediff treshold is a percentage value
-const TIMEDIFF_TRESHOLD = 0.05;
 // sizediff is byte value
 const SIZEDIFF_TRESHOLD = 1;
-
-function getAddition(diff: number) {
-  if (diff > 0) {
-    return " ⚠️";
-  } else {
-    return " 🚀";
-  }
-}
-
-function formatTimeDiff(timeDiff: number, time: number) {
-  let addition =
-    Math.abs(timeDiff) > Math.abs(time * TIMEDIFF_TRESHOLD)
-      ? getAddition(timeDiff)
-      : "";
-  let prefix = timeDiff > 0 ? "+" : "-";
-  return prefix + timeFormatter(Math.abs(timeDiff)) + addition;
-}
-
-function formatSizeDiff(sizeDiff: number) {
-  let addition = Math.abs(sizeDiff) > 0 ? getAddition(sizeDiff) : "";
-  let prefix = sizeDiff > 0 ? "+" : "-";
-  return prefix + sizeFormatter(Math.abs(sizeDiff)) + addition;
-}
 
 function logBundles(bundles: Array<BundleComparison>, title: string): string {
   let renderedBundles = 0;

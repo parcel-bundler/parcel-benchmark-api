@@ -1,7 +1,7 @@
 import fetch from "cross-fetch";
 import urlJoin from "url-join";
 
-import { GITHUB_USERNAME, REPO_OWNER, REPO_NAME } from "../constants";
+import { GITHUB_USERNAME, REPO_OWNER, REPO_NAME } from "../../../constants";
 import * as base64 from "../utils/base64";
 
 type PostCommentOptions = {
