@@ -1,6 +1,6 @@
 import path from "path";
 
-import { Comparison, Comparisons, BundleComparison } from "./comparison-types";
+import { Comparison, Comparisons, BundleComparison } from "../types/comparison";
 import timeFormatter from "./time-formatter";
 import sizeFormatter from "./size-formatter";
 

@@ -1,7 +1,7 @@
 import { query } from "faunadb";
 
 import faunaClient from "./fauna-client";
-import { Comparisons } from "./comparison-types";
+import { Comparisons } from "../types/comparison";
 
 type Payload = {
   commit: string;

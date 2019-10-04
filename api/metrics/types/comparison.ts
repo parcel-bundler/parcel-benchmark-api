@@ -29,3 +29,11 @@ export type Comparison = {
 };
 
 export type Comparisons = Array<Comparison>;
+
+export type ComparisonsDocument = {
+  comparisons: Comparisons;
+  repo: string;
+  branch: string;
+  commit: string;
+  issue?: string;
+};

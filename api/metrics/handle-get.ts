@@ -3,7 +3,6 @@ import { query } from "faunadb";
 
 import faunaClient from "./utils/fauna-client";
 
-// TODO: Make this dynamic at some point...
 const PAGE_COUNT = 20;
 
 function stringifyQuery(queryparam: string | Array<string>): string {
@@ -48,7 +47,7 @@ export default async function handleGet(req: NowRequest, res: NowResponse) {
         query.Paginate(
           query.Match(query.Index("comparisons_reverse_sorted_createdAt")),
           {
-            size: 20
+            size: PAGE_COUNT
           }
         ),
         query.Lambda(["createdAt", "ref"], query.Get(query.Var("ref")))

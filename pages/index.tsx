@@ -8,10 +8,12 @@ import SEO from "../components/seo";
 import { API_URL } from "../constants";
 import PageLayout from "../components/page-layout";
 import Title from "../components/title";
+import { ComparisonsDocument } from "../api/metrics/types/comparison";
+import ComparisonsCard from "../components/comparisons-card";
 
 type Props = {
   error?: Error;
-  comparisons?: Array<any>;
+  comparisons?: Array<ComparisonsDocument>;
 };
 
 const Page: NextPage<Props> = (props: Props) => {
@@ -24,8 +26,8 @@ const Page: NextPage<Props> = (props: Props) => {
 
   let comparisonsList = null;
   if (comparisons) {
-    comparisonsList = comparisons.map((comparison, i) => {
-      return <div key={i}>Comparison</div>;
+    comparisonsList = comparisons.map((comparison: ComparisonsDocument, i) => {
+      return <ComparisonsCard comparison={comparison} key={i} />;
     });
   }
 
