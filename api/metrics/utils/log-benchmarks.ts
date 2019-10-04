@@ -73,16 +73,21 @@ function logComparison(comparison: Comparison) {
 
 export default function logBenchmarks(comparisons: Comparisons, logOptions: LogOptions): string {
   let content = '## Benchmark Results\n';
+
   for (let comparison of comparisons) {
     content += logComparison(comparison);
     content += '\n\n';
   }
 
-  content += `**[Click here to view a detailed benchmark overview.](${urlJoin(
-    API_ROOT,
-    'benchmark',
-    logOptions.id
-  )})**`;
+  if (comparisons.length === 0) {
+    content += '**Could not run benchmarks, this probably means there is a bug in this branch...**\n\n\n';
+  } else {
+    content += `**[Click here to view a detailed benchmark overview.](${urlJoin(
+      API_ROOT,
+      'benchmark',
+      logOptions.id
+    )})**`;
+  }
 
   return content;
 }
