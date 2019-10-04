@@ -16,7 +16,7 @@ export default function BuildComparisonDetails(props: Props) {
 
   return (
     <Card className="my-4">
-      <h3 className="font-semibold font-xl mb-4">
+      <h3 className="font-semibold font-xl mb-4 text-gray-800">
         {name} - {timeFormatter(comparison.buildTime)} (
         <TimeDiff
           time={comparison.buildTime}
