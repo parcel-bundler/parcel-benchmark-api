@@ -13,7 +13,7 @@ export default async function checkAuth(req: NowRequest) {
 
   let faunaRes: any = await faunaClient.query(
     query.Get(
-      query.Match(query.Index("api-key-key-index"), authorizationHeader)
+      query.Match(query.Index("api-keys-key-index"), authorizationHeader)
     )
   );
 

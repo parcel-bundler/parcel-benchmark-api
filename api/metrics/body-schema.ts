@@ -50,10 +50,10 @@ export default {
         required: ["name", "cold", "cached"]
       }
     },
-    commitHash: { type: "string" },
+    commit: { type: "string" },
     repo: { type: "string" },
     branch: { type: "string" },
-    issueNumber: { type: "string" }
+    issue: { type: "string" }
   },
-  required: ["comparisons", "commitHash", "repo", "branch"]
+  required: ["comparisons", "commit", "repo", "branch"]
 };
