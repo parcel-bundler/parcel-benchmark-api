@@ -11,8 +11,8 @@ type Payload = {
   branch: string;
 };
 
-export default function storeComparison(data: Payload): Promise<any> {
-  return faunaClient.query(
+export default async function storeComparison(data: Payload): Promise<string> {
+  let res: any = await faunaClient.query(
     query.Create(query.Collection("comparisons"), {
       data: {
         ...data,
@@ -20,4 +20,8 @@ export default function storeComparison(data: Payload): Promise<any> {
       }
     })
   );
+
+  console.log(res)
+
+  return res.ref.id;
 }

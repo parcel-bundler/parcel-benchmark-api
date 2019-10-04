@@ -6,6 +6,7 @@ import timeFormatter from "../api/metrics/utils/time-formatter";
 import { REPO_NAME, REPO_OWNER } from "../constants";
 import TimeDiff from "./time-diff";
 import Link from "./link";
+import Card from "./card";
 
 type Props = {
   comparison: ComparisonsDocument;
@@ -15,7 +16,7 @@ export default function ComparisonsCard(props: Props) {
   let { comparison } = props;
 
   return (
-    <article className="w-full p-4 shadow-md rounded-lg">
+    <Card>
       <div className="flex justify-between mb-2 text-lg">
         <Link href={`/benchmark/${comparison.id}`}>
           <h2 className="font-semibold capitalize">
@@ -66,6 +67,6 @@ export default function ComparisonsCard(props: Props) {
           })}
         </ul>
       </div>
-    </article>
+    </Card>
   );
 }

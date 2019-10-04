@@ -49,7 +49,7 @@ Page.getInitialProps = async ({ query }: any) => {
       comparisons: res.data
     };
   } catch (e) {
-    return {};
+    return { error: e };
   }
 };
 

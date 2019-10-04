@@ -31,7 +31,16 @@ export default async function handlePost(req: NowRequest, res: NowResponse) {
   }
 
   let body: ComparisonsBody = { ...req.body };
-  let markdownString = logBenchmarks(body.comparisons);
+
+  // Store data into faunadb
+  let comparisonId = await storeComparisons(body);
+
+  let markdownString = logBenchmarks(body.comparisons, {
+    id: comparisonId
+  });
+
+  console.log(markdownString);
+
   if (body.issue && process.env.GITHUB_PASSWORD) {
     console.log("Post comment to GitHub");
 
@@ -41,9 +50,6 @@ export default async function handlePost(req: NowRequest, res: NowResponse) {
       githubPassword: process.env.GITHUB_PASSWORD
     });
   }
-
-  // Store data into faunadb
-  await storeComparisons(body);
 
   return res.end(
     JSON.stringify({

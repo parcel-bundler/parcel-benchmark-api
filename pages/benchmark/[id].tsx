@@ -9,7 +9,11 @@ import { API_URL } from "../../constants";
 import PageLayout from "../../components/page-layout";
 import Title from "../../components/title";
 import { ComparisonsDocument } from "../../api/metrics/types/comparison";
-import ComparisonsCard from "../../components/comparisons-card";
+import Label from "../../components/label";
+import Link from "../../components/link";
+import { REPO_NAME, REPO_OWNER } from "../../constants";
+import { formatDateTime } from "../../utils/format-date";
+import ComparisonDetails from "../../components/comparison-details";
 
 type Props = {
   error?: Error;
@@ -26,11 +30,52 @@ const Page: NextPage<Props> = (props: Props) => {
 
   if (!comparisons) return null;
 
+  let title = `${comparisons.repo} - ${comparisons.branch}`;
+
   return (
     <PageLayout>
-      <SEO title="Benchmark Details" />
-      <Title>Benchmark Details</Title>
-      <ComparisonsCard comparison={comparisons} />
+      <SEO title={title} />
+      <Title className="capitalize">{title}</Title>
+      <div className="flex justify-between mb-4">
+        <div>
+          <Label>Commit</Label>
+          <Link
+            href={urlJoin(
+              "https://github.com/",
+              comparisons.repo,
+              "commit",
+              comparisons.commit
+            )}
+          >
+            {comparisons.commit.substr(0, 8)}
+          </Link>
+        </div>
+        <div className="text-center">
+          <Label>Created At</Label>
+          <span className="text-gray-800 font-semibold">
+            {formatDateTime(comparisons.createdAt)}
+          </span>
+        </div>
+        {comparisons.issue && (
+          <div className="text-right">
+            <Label>Issue</Label>
+            <Link
+              href={urlJoin(
+                "https://github.com/",
+                REPO_OWNER,
+                REPO_NAME,
+                "issues",
+                comparisons.issue.toString()
+              )}
+            >
+              #{comparisons.issue}
+            </Link>
+          </div>
+        )}
+      </div>
+      {comparisons.comparisons.map((comparison, i) => {
+        return <ComparisonDetails comparison={comparison} key={i} />
+      })}
     </PageLayout>
   );
 };
@@ -44,7 +89,7 @@ Page.getInitialProps = async ({ query }: any) => {
       comparisons: res.data
     };
   } catch (e) {
-    return {};
+    return { error: e };
   }
 };
 

@@ -1,14 +1,19 @@
 import path from "path";
+import urlJoin from "url-join";
 
 import { Comparison, Comparisons, BundleComparison } from "../types/comparison";
 import timeFormatter from "./time-formatter";
 import sizeFormatter from "./size-formatter";
-import { TIMEDIFF_TRESHOLD } from "../../../constants";
+import { TIMEDIFF_TRESHOLD, API_ROOT } from "../../../constants";
 import formatTimeDiff from "./format-time-diff";
 import formatSizeDiff from "./format-size-diff";
 
 // sizediff is byte value
 const SIZEDIFF_TRESHOLD = 1;
+
+type LogOptions = {
+  id: string;
+};
 
 function logBundles(bundles: Array<BundleComparison>, title: string): string {
   let renderedBundles = 0;
@@ -73,12 +78,21 @@ function logComparison(comparison: Comparison) {
   return res;
 }
 
-export default function logBenchmarks(comparisons: Comparisons): string {
+export default function logBenchmarks(
+  comparisons: Comparisons,
+  logOptions: LogOptions
+): string {
   let content = "## Benchmark Results\n";
   for (let comparison of comparisons) {
     content += logComparison(comparison);
     content += "\n\n";
   }
+
+  content += `**[Click here to view a detailed benchmark overview.](${urlJoin(
+    API_ROOT,
+    "benchmark",
+    logOptions.id
+  )})**`;
 
   return content;
 }

@@ -16,7 +16,7 @@ export default function SEO(props: Props) {
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="description" content={SITE_DESCRIPTION} />
       <title>
-        {SITE_NAME} - {title}
+        {SITE_NAME} | {title}
       </title>
     </Head>
   );
