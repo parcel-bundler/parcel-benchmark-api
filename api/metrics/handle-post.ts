@@ -79,7 +79,7 @@ export default async function handlePost(req: NowRequest, res: NowResponse) {
   let body: ComparisonsBody = { ...req.body };
 
   // Store data into faunadb
-  let comparisonId = '1'; //await storeComparisons(body);
+  let comparisonId = await storeComparisons(body);
 
   let markdownString = logBenchmarks(body.comparisons, {
     id: comparisonId
