@@ -7,26 +7,29 @@ const PAGE_COUNT = 20;
 
 function stringifyQuery(queryparam: string | Array<string>): string {
   if (Array.isArray(queryparam)) {
-    return queryparam.join("");
+    queryparam = queryparam.join("");
   }
 
-  return queryparam;
+  return queryparam.trim();
 }
 
 export default async function handleGet(req: NowRequest, res: NowResponse) {
-  let commit = req.query.commit && stringifyQuery(req.query.commit);
-  if (commit) {
-    // Return comparisons for commit
+  let id = req.query.id && stringifyQuery(req.query.id);
+  if (id) {
+    // Return comparisons for id
     try {
       let faunaRes: any = await faunaClient.query(
-        query.Get(query.Match(query.Index("comparisons-commit-index"), commit))
+        query.Get(query.Ref(query.Collection("comparisons"), id))
       );
 
       res.statusCode = 200;
       res.end(
         JSON.stringify({
           type: "error",
-          data: faunaRes.data
+          data: {
+            id,
+            ...faunaRes.data
+          }
         })
       );
     } catch (e) {
@@ -54,10 +57,17 @@ export default async function handleGet(req: NowRequest, res: NowResponse) {
       )
     );
 
+    console.log(faunaRes);
+
     res.end(
       JSON.stringify({
         type: "success",
-        data: faunaRes.data.map((doc: any) => doc.data)
+        data: faunaRes.data.map((doc: any) => {
+          return {
+            id: doc.ref.id,
+            ...doc.data
+          };
+        })
       })
     );
   }

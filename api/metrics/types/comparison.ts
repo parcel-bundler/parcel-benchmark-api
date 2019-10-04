@@ -30,10 +30,15 @@ export type Comparison = {
 
 export type Comparisons = Array<Comparison>;
 
-export type ComparisonsDocument = {
+export type ComparisonsBody = {
   comparisons: Comparisons;
   repo: string;
   branch: string;
   commit: string;
   issue?: string;
 };
+
+export type ComparisonsDocument = ComparisonsBody & {
+  id: string;
+  createdAt: number
+}

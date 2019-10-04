@@ -6,7 +6,7 @@ import storeComparisons from "./utils/store-comparisons";
 import checkAuth from "./utils/check-auth";
 import bodySchema from "./body-schema";
 import logBenchmarks from "./utils/log-benchmarks";
-import { ComparisonsDocument } from "./types/comparison";
+import { ComparisonsBody } from "./types/comparison";
 
 const ajvInstance = new Ajv();
 
@@ -30,7 +30,7 @@ export default async function handlePost(req: NowRequest, res: NowResponse) {
     );
   }
 
-  let body: ComparisonsDocument = { ...req.body };
+  let body: ComparisonsBody = { ...req.body };
   let markdownString = logBenchmarks(body.comparisons);
   if (body.issue && process.env.GITHUB_PASSWORD) {
     console.log("Post comment to GitHub");
