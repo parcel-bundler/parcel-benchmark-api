@@ -17,22 +17,33 @@ export default function BuildComparisonDetails(props: Props) {
   return (
     <Card className="my-4">
       <h3 className="font-semibold font-xl mb-4 text-gray-800">
-        {name} - {timeFormatter(comparison.buildTime)} (
-        <TimeDiff time={comparison.buildTime} timeDiff={comparison.buildTimeDiff} />)
+        {name} -{' '}
+        {comparison.buildTime < 0 ? (
+          <span className="text-red-600">Failed</span>
+        ) : (
+          <>
+            {timeFormatter(comparison.buildTime)} (
+            <TimeDiff time={comparison.buildTime} timeDiff={comparison.buildTimeDiff} />)
+          </>
+        )}
       </h3>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr repeat(4, auto)',
-          gridRowGap: '0.5rem',
-          gridColumnGap: '1.5rem'
-        }}
-      >
-        {comparison.bundles.map((b, i) => (
-          <BundleDetails bundle={b} key={i} />
-        ))}
-      </div>
+      {comparison.bundles.length > 0 ? (
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr repeat(4, auto)',
+            gridRowGap: '0.5rem',
+            gridColumnGap: '1.5rem'
+          }}
+        >
+          {comparison.bundles.map((b, i) => (
+            <BundleDetails bundle={b} key={i} />
+          ))}
+        </div>
+      ) : (
+        <div>Comparison contains no bundles, this build has probably failed.</div>
+      )}
     </Card>
   );
 }

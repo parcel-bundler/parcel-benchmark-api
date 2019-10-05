@@ -15,8 +15,10 @@ type LogOptions = {
 };
 
 function logBundles(bundles: Array<BundleComparison>, title: string): string {
+  let res = `#### ${title}\n\n`;
+
   if (bundles.length === 0) {
-    return '*No bundles found, this is probably a failed build...*\n';
+    return res + '*No bundles found, this is probably a failed build...*\n';
   }
 
   let renderedBundles = 0;
@@ -37,7 +39,6 @@ function logBundles(bundles: Array<BundleComparison>, title: string): string {
     renderedBundles++;
   }
 
-  let res = `#### ${title}\n\n`;
   if (renderedBundles > 0) {
     res += bundleTable;
   } else {

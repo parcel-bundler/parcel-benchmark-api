@@ -12,6 +12,27 @@ type Props = {
   comparison: ComparisonsDocument;
 };
 
+type TimeElementProps = {
+  buildTime: number;
+  buildTimeDiff: number;
+};
+
+function TimeElement(props: TimeElementProps) {
+  let { buildTime, buildTimeDiff } = props;
+
+  return (
+    <span className="font-semibold text-gray-800">
+      {buildTime < 0 ? (
+        <span className="text-red-600">Failed</span>
+      ) : (
+        <>
+          {timeFormatter(buildTime)} (<TimeDiff time={buildTime} timeDiff={buildTimeDiff} />)
+        </>
+      )}
+    </span>
+  );
+}
+
 export default function ComparisonsCard(props: Props) {
   let { comparison } = props;
 
@@ -47,14 +68,8 @@ export default function ComparisonsCard(props: Props) {
           return (
             <>
               <span className="capitalize">{comparison.name}</span>
-              <span className="font-semibold text-gray-800">
-                {timeFormatter(comparison.cold.buildTime)} (
-                <TimeDiff time={comparison.cold.buildTime} timeDiff={comparison.cold.buildTimeDiff} />)
-              </span>
-              <span className="font-semibold text-gray-800">
-                {timeFormatter(comparison.cached.buildTime)} (
-                <TimeDiff time={comparison.cached.buildTime} timeDiff={comparison.cached.buildTimeDiff} />)
-              </span>
+              <TimeElement buildTime={comparison.cold.buildTime} buildTimeDiff={comparison.cold.buildTimeDiff} />
+              <TimeElement buildTime={comparison.cached.buildTime} buildTimeDiff={comparison.cached.buildTimeDiff} />
             </>
           );
         })}
