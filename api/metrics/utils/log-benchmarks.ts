@@ -15,6 +15,10 @@ type LogOptions = {
 };
 
 function logBundles(bundles: Array<BundleComparison>, title: string): string {
+  if (bundles.length === 0) {
+    return '*No bundles found, this is probably a failed build...*\n';
+  }
+
   let renderedBundles = 0;
   let bundleTable = '| Bundle | Size | Difference | Time | Difference |\n';
   bundleTable += '| --- | --- | --- | --- | --- |\n';
@@ -52,19 +56,17 @@ function logComparison(comparison: Comparison) {
   res += '#### Timings\n\n';
   res += '| Description | Time | Difference |\n';
   res += '| --- | --- | --- |\n';
-  res += `| Cold | ${timeFormatter(comparison.cold.buildTime)} | ${formatTimeDiff(
-    comparison.cold.buildTimeDiff,
-    comparison.cold.buildTime
-  )} |\n`;
-  res += `| Cached | ${timeFormatter(comparison.cached.buildTime)} | ${formatTimeDiff(
-    comparison.cached.buildTimeDiff,
-    comparison.cached.buildTime
-  )} |\n`;
+  res += `| Cold | ${
+    comparison.cold.buildTime < 0 ? '**FAILED**' : timeFormatter(comparison.cold.buildTime)
+  } | ${formatTimeDiff(comparison.cold.buildTimeDiff, comparison.cold.buildTime)} |\n`;
+  res += `| Cached | ${
+    comparison.cached.buildTime < 0 ? '**FAILED**' : timeFormatter(comparison.cached.buildTime)
+  } | ${formatTimeDiff(comparison.cached.buildTimeDiff, comparison.cached.buildTime)} |\n`;
   res += '\n';
 
   // Bundle Sizes
   res += logBundles(comparison.cold.bundles, 'Cold Bundles');
-  res += logBundles(comparison.cold.bundles, 'Cached Bundles');
+  res += logBundles(comparison.cached.bundles, 'Cached Bundles');
 
   res += '</p></details>';
 
