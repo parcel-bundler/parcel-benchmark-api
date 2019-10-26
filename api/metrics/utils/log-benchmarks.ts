@@ -49,9 +49,10 @@ function logBundles(bundles: Array<BundleComparison>, title: string): string {
 }
 
 function logComparison(comparison: Comparison) {
+  let benchmarkFailed = !!(comparison.cold.buildTime < 0 || comparison.cached.buildTime < 0);
   let res = '';
 
-  res += `<details><summary>${comparison.name}</summary><p>\n\n`;
+  res += `<details><summary>${comparison.name} ${benchmarkFailed ? '🚨' : '✅'}</summary><p>\n\n`;
 
   // Timings
   res += '#### Timings\n\n';
