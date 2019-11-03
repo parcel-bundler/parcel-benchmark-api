@@ -41,7 +41,7 @@ export default function ComparisonsCard(props: Props) {
       <div className="flex justify-between mb-2 text-lg">
         <div>
           <Link href={`/benchmark/${comparison.id}`}>
-            <h2 className="font-semibold capitalize">
+            <h2 className="font-semibold">
               {comparison.branch} - {comparison.commit.substr(0, 8)}
             </h2>
           </Link>

@@ -13,7 +13,7 @@ export default function ComparisonDetails(props: Props) {
 
   return (
     <div className="my-8">
-      <SubTitle className="capitalize">{comparison.name}</SubTitle>
+      <SubTitle>{comparison.name}</SubTitle>
       <BuildComparisonDetails name="Cold" comparison={comparison.cold} />
       <BuildComparisonDetails name="Cached" comparison={comparison.cached} />
     </div>

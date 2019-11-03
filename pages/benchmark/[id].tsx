@@ -36,7 +36,7 @@ const Page: NextPage<Props> = (props: Props) => {
   return (
     <PageLayout>
       <SEO title={title} />
-      <Title className="capitalize">{title}</Title>
+      <Title>{title}</Title>
       <div className="flex justify-between mb-12 mt-8">
         <div>
           <Label>Commit</Label>
