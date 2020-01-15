@@ -1,5 +1,6 @@
 import React from 'react';
 import App from 'next/app';
+import '../style.css';
 
 import sentry from '../utils/sentry';
 
