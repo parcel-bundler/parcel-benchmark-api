@@ -5538,10 +5538,10 @@ next-svgr@^0.0.2:
   dependencies:
     "@svgr/webpack" "^4.3.0"
 
-next@^9.1.8-canary.17:
-  version "9.1.8-canary.17"
-  resolved "https://registry.yarnpkg.com/next/-/next-9.1.8-canary.17.tgz#dca0bc4ae4e61db4eafbc156b1c084c6a81d0f55"
-  integrity sha512-6SGxJocmcPGs2B13nWyQcGdva0XXzWhJvxwga0qyFOdehqHNK636pTMwqWBK790ic7DkpCbymFz2sNpEAgxr9g==
+next@^9.2.0:
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/next/-/next-9.2.0.tgz#1adc85ad45143114cd22e6a68337f56319cd59d2"
+  integrity sha512-c4gyJotZHuvq9dslum+Z2Z21jjb9qWMYybV+IS9yEg7hTjs8OyKU59snyJ1Bi0ul84OdyLOZ4ytjch9zMw9lEQ==
   dependencies:
     "@ampproject/toolbox-optimizer" "1.1.1"
     "@babel/core" "7.7.2"
