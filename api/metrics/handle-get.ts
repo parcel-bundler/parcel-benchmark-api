@@ -2,8 +2,9 @@ import { NowRequest, NowResponse } from '@now/node';
 import { query } from 'faunadb';
 
 import faunaClient from './utils/fauna-client';
+import { API_ROOT } from '../../constants';
 
-const PAGE_COUNT = 50;
+const PAGE_COUNT = 40;
 
 function stringifyQuery(queryparam: string | Array<string>): string {
   if (Array.isArray(queryparam)) {
@@ -15,6 +16,9 @@ function stringifyQuery(queryparam: string | Array<string>): string {
 
 export default async function handleGet(req: NowRequest, res: NowResponse) {
   let id = req.query.id && stringifyQuery(req.query.id);
+  let after = req.query.after && stringifyQuery(req.query.after);
+  let before = req.query.before && stringifyQuery(req.query.before);
+
   if (id) {
     // Return comparisons for id
     try {
@@ -42,17 +46,36 @@ export default async function handleGet(req: NowRequest, res: NowResponse) {
       );
     }
   } else {
+    let paginationOptions: any = {
+      size: PAGE_COUNT
+    };
+
+    if (before) {
+      paginationOptions.before = [query.Ref(query.Collection('comparisons'), before)];
+    }
+
+    if (after) {
+      paginationOptions.after = [query.Ref(query.Collection('comparisons'), after)];
+    }
+
     // Return last x comparisons
     let faunaRes: any = await faunaClient.query(
       query.Map(
-        query.Paginate(query.Match(query.Index('comparisons_reverse_sorted_createdAt')), {
-          size: PAGE_COUNT
-        }),
+        query.Paginate(query.Match(query.Index('comparisons_reverse_sorted_createdAt')), paginationOptions),
         query.Lambda(['createdAt', 'ref'], query.Get(query.Var('ref')))
       )
     );
 
-    console.log(faunaRes);
+    let nextUrl = '';
+    let prevUrl = '';
+
+    if (faunaRes.after && faunaRes.after.length) {
+      nextUrl = `${API_ROOT}/metrics?after=${faunaRes.after[0].id}`;
+    }
+
+    if (faunaRes.before && faunaRes.before.length) {
+      prevUrl = `${API_ROOT}/metrics?before=${faunaRes.before[0].id}`;
+    }
 
     res.end(
       JSON.stringify({
@@ -62,7 +85,10 @@ export default async function handleGet(req: NowRequest, res: NowResponse) {
             id: doc.ref.id,
             ...doc.data
           };
-        })
+        }),
+        count: faunaRes.data.length,
+        next: nextUrl ? nextUrl : undefined,
+        previous: prevUrl ? prevUrl : undefined
       })
     );
   }
