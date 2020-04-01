@@ -1,9 +1,7 @@
 import { NowRequest, NowResponse } from '@now/node';
 import { query } from 'faunadb';
-import urljoin from 'url-join';
 
 import faunaClient from './utils/fauna-client';
-import { API_ROOT } from '../../constants';
 
 const PAGE_COUNT = 40;
 
