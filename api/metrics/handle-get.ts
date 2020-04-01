@@ -3,7 +3,7 @@ import { query } from 'faunadb';
 
 import faunaClient from './utils/fauna-client';
 
-const PAGE_COUNT = 20;
+const PAGE_COUNT = 50;
 
 function stringifyQuery(queryparam: string | Array<string>): string {
   if (Array.isArray(queryparam)) {
