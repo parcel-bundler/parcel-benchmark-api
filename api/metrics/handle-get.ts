@@ -71,11 +71,17 @@ export default async function handleGet(req: NowRequest, res: NowResponse) {
     let prevUrl = '';
 
     if (faunaRes.after && faunaRes.after.length) {
-      nextUrl = urljoin(API_ROOT, `/metrics?after=${faunaRes.after[0]}`);
+      nextUrl = urljoin(
+        API_ROOT,
+        `/api/metrics?after=${typeof faunaRes.after[0] === 'number' ? faunaRes.after[0] : faunaRes.after[0].id}`
+      );
     }
 
     if (faunaRes.before && faunaRes.before.length) {
-      prevUrl = urljoin(API_ROOT, `/metrics?before=${faunaRes.before[0]}`);
+      prevUrl = urljoin(
+        API_ROOT,
+        `/api/metrics?before=${typeof faunaRes.before[0] === 'number' ? faunaRes.before[0] : faunaRes.before[0].id}`
+      );
     }
 
     res.end(
