@@ -71,7 +71,7 @@ export default async function handleGet(req: NowRequest, res: NowResponse) {
     let prevUrl = '';
 
     if (faunaRes.after && faunaRes.after.length) {
-      nextUrl = urljoin(API_ROOT, `/metrics?after=${faunaRes.after[0].id}`);
+      nextUrl = urljoin(API_ROOT, `/metrics?after=${typeof faunaRes.after[0]}${faunaRes.after[0].id}`);
     }
 
     if (faunaRes.before && faunaRes.before.length) {
