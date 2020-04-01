@@ -67,21 +67,15 @@ export default async function handleGet(req: NowRequest, res: NowResponse) {
       )
     );
 
-    let nextUrl = '';
-    let prevUrl = '';
+    let next = null;
+    let previous = null;
 
     if (faunaRes.after && faunaRes.after.length) {
-      nextUrl = urljoin(
-        API_ROOT,
-        `/api/metrics?after=${typeof faunaRes.after[0] === 'number' ? faunaRes.after[0] : faunaRes.after[0].id}`
-      );
+      next = typeof faunaRes.after[0] === 'number' ? faunaRes.after[0] : faunaRes.after[0].id;
     }
 
     if (faunaRes.before && faunaRes.before.length) {
-      prevUrl = urljoin(
-        API_ROOT,
-        `/api/metrics?before=${typeof faunaRes.before[0] === 'number' ? faunaRes.before[0] : faunaRes.before[0].id}`
-      );
+      previous = typeof faunaRes.before[0] === 'number' ? faunaRes.before[0] : faunaRes.before[0].id;
     }
 
     res.end(
@@ -94,8 +88,8 @@ export default async function handleGet(req: NowRequest, res: NowResponse) {
           };
         }),
         count: faunaRes.data.length,
-        next: nextUrl ? nextUrl : undefined,
-        previous: prevUrl ? prevUrl : undefined
+        next: next,
+        previous: previous
       })
     );
   }
