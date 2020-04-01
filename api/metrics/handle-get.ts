@@ -71,11 +71,11 @@ export default async function handleGet(req: NowRequest, res: NowResponse) {
     let prevUrl = '';
 
     if (faunaRes.after && faunaRes.after.length) {
-      nextUrl = urljoin(API_ROOT, `/metrics?after=${typeof faunaRes.after[0]}${faunaRes.after[0].id}`);
+      nextUrl = urljoin(API_ROOT, `/metrics?after=${faunaRes.after[0]}`);
     }
 
     if (faunaRes.before && faunaRes.before.length) {
-      prevUrl = urljoin(API_ROOT, `/metrics?before=${faunaRes.before[0].id}`);
+      prevUrl = urljoin(API_ROOT, `/metrics?before=${faunaRes.before[0]}`);
     }
 
     res.end(
