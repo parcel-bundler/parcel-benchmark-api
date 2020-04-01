@@ -45,6 +45,8 @@ Page.getInitialProps = async () => {
     let res: any = await fetch(urlJoin(API_URL, 'metrics'));
     res = await res.json();
 
+    console.log(res);
+
     return {
       comparisons: res.data
     };

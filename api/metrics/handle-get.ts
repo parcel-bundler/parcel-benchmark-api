@@ -1,5 +1,6 @@
 import { NowRequest, NowResponse } from '@now/node';
 import { query } from 'faunadb';
+import urljoin from 'url-join';
 
 import faunaClient from './utils/fauna-client';
 import { API_ROOT } from '../../constants';
@@ -70,11 +71,11 @@ export default async function handleGet(req: NowRequest, res: NowResponse) {
     let prevUrl = '';
 
     if (faunaRes.after && faunaRes.after.length) {
-      nextUrl = `${API_ROOT}/metrics?after=${faunaRes.after[0].id}`;
+      nextUrl = urljoin(API_ROOT, `/metrics?after=${faunaRes.after[0].id}`);
     }
 
     if (faunaRes.before && faunaRes.before.length) {
-      prevUrl = `${API_ROOT}/metrics?before=${faunaRes.before[0].id}`;
+      prevUrl = urljoin(API_ROOT, `/metrics?before=${faunaRes.before[0].id}`);
     }
 
     res.end(

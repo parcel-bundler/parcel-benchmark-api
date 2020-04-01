@@ -1,8 +1,7 @@
 // NOTE: This require will be replaced with `@sentry/browser`
 // client side thanks to the webpack config in next.config.js
-// @ts-ignore
-const Sentry = require('@sentry/node');
-const SentryIntegrations = require('@sentry/integrations');
+import * as Sentry from '@sentry/node';
+import * as SentryIntegrations from '@sentry/integrations';
 import cookie from 'cookie';
 
 const SENTRY_DSN = 'https://bfe4a12bb8e847cbb5307da9493306f6@sentry.io/1770100';
@@ -17,13 +16,9 @@ export default (release = process.env.SENTRY_RELEASE) => {
 
   // When we're developing locally
   if (process.env.NODE_ENV !== 'production') {
-    /* eslint-disable-next-line global-require */
-    const sentryTestkit = require('sentry-testkit');
-    const { sentryTransport } = sentryTestkit();
-
     // Don't actually send the errors to Sentry
     // @ts-ignore
-    sentryOptions.transport = sentryTransport;
+    sentryOptions.beforeSend = () => null;
 
     // Instead, dump the errors to the console
     // @ts-ignore
@@ -40,7 +35,7 @@ export default (release = process.env.SENTRY_RELEASE) => {
   return {
     Sentry,
     // @ts-ignore
-    captureException: (err, ctx) => {
+    captureException: (err, ctx?: any) => {
       // @ts-ignore
       Sentry.configureScope(scope => {
         if (err.message) {
@@ -61,7 +56,7 @@ export default (release = process.env.SENTRY_RELEASE) => {
           }
 
           if (typeof window !== 'undefined') {
-            scope.setTag('ssr', false);
+            scope.setTag('ssr', 'false');
             scope.setExtra('query', query);
             scope.setExtra('pathname', pathname);
 
@@ -72,7 +67,7 @@ export default (release = process.env.SENTRY_RELEASE) => {
               scope.setUser({ id: sessionId });
             }
           } else {
-            scope.setTag('ssr', true);
+            scope.setTag('ssr', 'true');
             scope.setExtra('url', req.url);
             scope.setExtra('method', req.method);
             scope.setExtra('headers', req.headers);

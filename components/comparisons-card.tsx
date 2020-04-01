@@ -64,13 +64,13 @@ export default function ComparisonsCard(props: Props) {
         <span className="text-gray-600">Benchmark</span>
         <span className="text-gray-600">Cold</span>
         <span className="text-gray-600">Cached</span>
-        {comparison.comparisons.map(comparison => {
+        {comparison.comparisons.map((comparison, i) => {
           return (
-            <>
+            <React.Fragment key={i}>
               <span className="capitalize">{comparison.name}</span>
               <TimeElement buildTime={comparison.cold.buildTime} buildTimeDiff={comparison.cold.buildTimeDiff} />
               <TimeElement buildTime={comparison.cached.buildTime} buildTimeDiff={comparison.cached.buildTimeDiff} />
-            </>
+            </React.Fragment>
           );
         })}
       </div>
