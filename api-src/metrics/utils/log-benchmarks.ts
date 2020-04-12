@@ -1,11 +1,11 @@
 import urlJoin from 'url-join';
 
-import { Comparison, Comparisons, BundleComparison } from '../types/comparison';
-import timeFormatter from './time-formatter';
-import sizeFormatter from './size-formatter';
+import { Comparison, Comparisons, BundleComparison } from '../../../types/comparison';
+import timeFormatter from '../../../utils/time-formatter';
+import sizeFormatter from '../../../utils/size-formatter';
 import { TIMEDIFF_TRESHOLD, API_ROOT } from '../../../constants';
-import formatTimeDiff from './format-time-diff';
-import formatSizeDiff from './format-size-diff';
+import formatTimeDiff from '../../../utils/format-time-diff';
+import formatSizeDiff from '../../../utils/format-size-diff';
 
 // sizediff is byte value
 const SIZEDIFF_TRESHOLD = 1;

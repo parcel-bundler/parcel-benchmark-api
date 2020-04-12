@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { BuildComparison } from '../api/metrics/types/comparison';
+import { BuildComparison } from '../types/comparison';
 import Card from './card';
 import BundleDetails from './bundle-details';
 import TimeDiff from './time-diff';
-import timeFormatter from '../api/metrics/utils/time-formatter';
+import timeFormatter from '../utils/time-formatter';
 
 type Props = {
   name: string;

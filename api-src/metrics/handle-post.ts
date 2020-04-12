@@ -8,7 +8,7 @@ import storeComparisons from './utils/store-comparisons';
 import checkAuth from './utils/check-auth';
 import bodySchema from './body-schema';
 import logBenchmarks from './utils/log-benchmarks';
-import { ComparisonsBody } from './types/comparison';
+import { ComparisonsBody } from '../../types/comparison';
 import { GITHUB_USERNAME } from '../../constants';
 import updateComment from './github/update-comment';
 

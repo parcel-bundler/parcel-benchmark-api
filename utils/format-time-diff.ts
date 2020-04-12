@@ -1,4 +1,4 @@
-import { TIMEDIFF_TRESHOLD } from '../../../constants';
+import { TIMEDIFF_TRESHOLD } from '../constants';
 import getAddition from './get-emoji-addition';
 import timeFormatter from './time-formatter';
 

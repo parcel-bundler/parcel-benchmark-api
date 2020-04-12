@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import formatSizeDiff from '../api/metrics/utils/format-size-diff';
+import formatSizeDiff from '../utils/format-size-diff';
 
 type Props = {
   sizeDiff: number;

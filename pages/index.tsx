@@ -9,7 +9,7 @@ import SEO from '../components/seo';
 import { API_URL } from '../constants';
 import PageLayout from '../components/page-layout';
 import Title from '../components/title';
-import { ComparisonsDocument } from '../api/metrics/types/comparison';
+import { ComparisonsDocument } from '../types/comparison';
 import ComparisonsCard from '../components/comparisons-card';
 import ErrorPage from '../components/error-page';
 

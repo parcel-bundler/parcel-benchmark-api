@@ -1,8 +1,8 @@
 import React from 'react';
 import urlJoin from 'url-join';
 
-import { ComparisonsDocument } from '../api/metrics/types/comparison';
-import timeFormatter from '../api/metrics/utils/time-formatter';
+import { ComparisonsDocument } from '../types/comparison';
+import timeFormatter from '../utils/time-formatter';
 import { REPO_NAME, REPO_OWNER } from '../constants';
 import TimeDiff from './time-diff';
 import Link from './link';

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { BundleComparison } from '../api/metrics/types/comparison';
-import formatSize from '../api/metrics/utils/size-formatter';
-import formatTime from '../api/metrics/utils/time-formatter';
+import { BundleComparison } from '../types/comparison';
+import formatSize from '../utils/size-formatter';
+import formatTime from '../utils/time-formatter';
 import TimeDiff from './time-diff';
 import SizeDiff from './size-diff';
 

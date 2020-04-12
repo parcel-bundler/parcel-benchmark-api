@@ -1,7 +1,7 @@
 import React from 'react';
 
 import SubTitle from './sub-title';
-import { Comparison } from '../api/metrics/types/comparison';
+import { Comparison } from '../types/comparison';
 import BuildComparisonDetails from './build-comparison-details';
 
 type Props = {

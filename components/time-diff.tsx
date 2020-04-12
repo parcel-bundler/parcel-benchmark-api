@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import formatTimeDiff from '../api/metrics/utils/format-time-diff';
+import formatTimeDiff from '../utils/format-time-diff';
 import { TIMEDIFF_TRESHOLD } from '../constants';
 
 type Props = {
