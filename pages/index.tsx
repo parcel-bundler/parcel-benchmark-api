@@ -11,22 +11,17 @@ import PageLayout from '../components/page-layout';
 import Title from '../components/title';
 import { ComparisonsDocument } from '../api/metrics/types/comparison';
 import ComparisonsCard from '../components/comparisons-card';
-import LinkButton from '../components/link-button';
+import ErrorPage from '../components/error-page';
 
 type Props = {
-  error?: Error;
+  error?: string;
   comparisons?: Array<ComparisonsDocument>;
   next?: number | string;
   previous?: number | string;
 };
 
-const Page: NextPage<Props> = (props: Props) => {
-  let { error, comparisons, next, previous } = props;
-
-  // Error boundary should catch this?
-  if (error) {
-    throw error;
-  }
+const Comparisons = (props: { comparisons: Array<ComparisonsDocument> }) => {
+  let { comparisons } = props;
 
   let comparisonsList = null;
   if (comparisons) {
@@ -36,14 +31,21 @@ const Page: NextPage<Props> = (props: Props) => {
   }
 
   return (
-    <PageLayout>
-      <SEO title="Recent Benchmarks" />
+    <React.Fragment>
       <Title className="mb-8">Recent Benchmarks</Title>
       {comparisonsList}
-      <div className="flex justify-between">
-        <div>{previous && <LinkButton href={`/?previous=${previous}`}>Previous</LinkButton>}</div>
-        <div>{next && <LinkButton href={`/?next=${next}`}>Next</LinkButton>}</div>
-      </div>
+    </React.Fragment>
+  );
+};
+
+const Page: NextPage<Props> = (props: Props) => {
+  let { error, comparisons } = props;
+
+  return (
+    <PageLayout>
+      <SEO title="Recent Benchmarks" />
+      {error && <ErrorPage error={error} />}
+      {comparisons && <Comparisons comparisons={comparisons} />}
     </PageLayout>
   );
 };
@@ -56,15 +58,28 @@ Page.getInitialProps = async ({ query }: any) => {
     });
     let apiUrl = urlJoin(API_URL, `metrics${q ? `?${q}` : ''}`);
     let res: any = await fetch(apiUrl);
-    res = await res.json();
 
-    return {
-      comparisons: res.data,
-      next: res.next,
-      previous: res.previous
-    };
+    let contentType = res.headers.get('content-type');
+    if (contentType.includes('application/json')) {
+      res = await res.json();
+
+      return {
+        comparisons: res.data,
+        next: res.next,
+        previous: res.previous
+      };
+    } else {
+      if (res.status >= 400) {
+        let message = await res.text();
+        throw new Error(message);
+      }
+
+      return {
+        comparisons: []
+      };
+    }
   } catch (e) {
-    return { error: e };
+    return { error: e.message };
   }
 };
 

@@ -15,27 +15,19 @@ import { REPO_NAME, REPO_OWNER } from '../../constants';
 import { formatDateTime } from '../../utils/format-date';
 import ComparisonDetails from '../../components/comparison-details';
 import ChevronLeft from '../../icons/chevron-left.svg';
+import ErrorPage from '../../components/error-page';
 
 type Props = {
-  error?: Error;
+  error?: string;
   comparisons?: ComparisonsDocument;
 };
 
-const Page: NextPage<Props> = (props: Props) => {
-  let { error, comparisons } = props;
-
-  // Error boundary should catch this?
-  if (error) {
-    throw error;
-  }
-
-  if (!comparisons) return null;
+const Comparisons = (props: { comparisons: ComparisonsDocument }) => {
+  let { comparisons } = props;
 
   let title = `${comparisons.repo} - ${comparisons.branch}`;
-
   return (
-    <PageLayout>
-      <SEO title={title} />
+    <React.Fragment>
       <Title>{title}</Title>
       <div className="flex justify-between mb-12 mt-8">
         <div>
@@ -64,6 +56,18 @@ const Page: NextPage<Props> = (props: Props) => {
         <ChevronLeft className="fill-current h-3 w-3 inline-block mr-2" />
         Return to benchmarks overview
       </Link>
+    </React.Fragment>
+  );
+};
+
+const Page: NextPage<Props> = (props: Props) => {
+  let { error, comparisons } = props;
+
+  return (
+    <PageLayout>
+      <SEO title="Recent Benchmarks" />
+      {comparisons && !error && <Comparisons comparisons={comparisons} />}
+      {error && <ErrorPage error={error} />}
     </PageLayout>
   );
 };
@@ -71,13 +75,20 @@ const Page: NextPage<Props> = (props: Props) => {
 Page.getInitialProps = async ({ query }: any) => {
   try {
     let res: any = await fetch(urlJoin(API_URL, `metrics?id=${query.id}`));
-    res = await res.json();
 
-    return {
-      comparisons: res.data
-    };
+    if (!res.headers['content-type'] || !res.headers['content-type'].includes('application/json')) {
+      res = await res.json();
+
+      return {
+        comparisons: res.data
+      };
+    } else {
+      return {
+        comparisons: []
+      };
+    }
   } catch (e) {
-    return { error: e };
+    return { error: e.message };
   }
 };
 
