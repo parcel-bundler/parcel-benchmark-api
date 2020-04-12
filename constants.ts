@@ -1,4 +1,5 @@
-export const API_ROOT = 'https://benchmark.parceljs.org/';
+export const IS_DEV = process.env.NODE_ENV !== 'production';
+export const API_ROOT = IS_DEV ? 'http://localhost:3000/' : 'https://benchmark.parceljs.org/';
 export const API_URL = API_ROOT + 'api/';
 export const SITE_NAME = 'Parcel Benchmark';
 export const SITE_DESCRIPTION = '';

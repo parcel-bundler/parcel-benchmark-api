@@ -3,7 +3,7 @@ import { query } from 'faunadb';
 
 import faunaClient from './utils/fauna-client';
 
-const PAGE_COUNT = 40;
+const PAGE_COUNT = 25;
 
 function stringifyQuery(queryparam: string | Array<string>): string {
   if (Array.isArray(queryparam)) {
@@ -15,8 +15,6 @@ function stringifyQuery(queryparam: string | Array<string>): string {
 
 export default async function handleGet(req: NowRequest, res: NowResponse) {
   let id = req.query.id && stringifyQuery(req.query.id);
-  let after = req.query.after && stringifyQuery(req.query.after);
-  let before = req.query.before && stringifyQuery(req.query.before);
 
   if (id) {
     // Return comparisons for id
@@ -49,14 +47,6 @@ export default async function handleGet(req: NowRequest, res: NowResponse) {
       size: PAGE_COUNT
     };
 
-    if (before) {
-      paginationOptions.before = [query.Ref(query.Collection('comparisons'), before)];
-    }
-
-    if (after) {
-      paginationOptions.after = [query.Ref(query.Collection('comparisons'), after)];
-    }
-
     // Return last x comparisons
     let faunaRes: any = await faunaClient.query(
       query.Map(
@@ -64,17 +54,6 @@ export default async function handleGet(req: NowRequest, res: NowResponse) {
         query.Lambda(['createdAt', 'ref'], query.Get(query.Var('ref')))
       )
     );
-
-    let next = null;
-    let previous = null;
-
-    if (faunaRes.after && faunaRes.after.length) {
-      next = typeof faunaRes.after[0] === 'number' ? faunaRes.after[0] : faunaRes.after[0].id;
-    }
-
-    if (faunaRes.before && faunaRes.before.length) {
-      previous = typeof faunaRes.before[0] === 'number' ? faunaRes.before[0] : faunaRes.before[0].id;
-    }
 
     res.end(
       JSON.stringify({
@@ -85,9 +64,7 @@ export default async function handleGet(req: NowRequest, res: NowResponse) {
             ...doc.data
           };
         }),
-        count: faunaRes.data.length,
-        next: next,
-        previous: previous
+        count: faunaRes.data.length
       })
     );
   }
