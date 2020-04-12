@@ -2,8 +2,16 @@ import { NowRequest, NowResponse } from '@now/node';
 import { query } from 'faunadb';
 
 import faunaClient from './utils/fauna-client';
+import { ComparisonsDocument } from '../../types/comparison';
 
-const PAGE_COUNT = 25;
+type Comparison = {
+  data: ComparisonsDocument;
+  ref: {
+    id: any;
+  };
+};
+
+const PAGE_COUNT = 50;
 
 function stringifyQuery(queryparam: string | Array<string>): string {
   if (Array.isArray(queryparam)) {
@@ -58,10 +66,27 @@ export default async function handleGet(req: NowRequest, res: NowResponse) {
     res.end(
       JSON.stringify({
         type: 'success',
-        data: faunaRes.data.map((doc: any) => {
+        data: faunaRes.data.map((doc: Comparison) => {
           return {
             id: doc.ref.id,
-            ...doc.data
+            comparisons: doc.data.comparisons.map(c => {
+              return {
+                name: c.name,
+                cold: {
+                  buildTime: c.cold.buildTime,
+                  buildTimeDiff: c.cold.buildTimeDiff
+                },
+                cached: {
+                  buildTime: c.cached.buildTime,
+                  buildTimeDiff: c.cached.buildTimeDiff
+                }
+              };
+            }),
+            repo: doc.data.repo,
+            branch: doc.data.branch,
+            commit: doc.data.commit,
+            issue: doc.data.issue,
+            createdAt: doc.data.createdAt
           };
         }),
         count: faunaRes.data.length
